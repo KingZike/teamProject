@@ -1,13 +1,13 @@
 
 def student1Function():
-    pass
+    print ("Sam Evans")
 
 
 def student2Function():
-    pass
+    print ("Nathan Granade")
 
 def studentNFunction():
-    pass
+    print ("Matthew Karasoulis")
 
 ############ main program #############
 student1Function()
