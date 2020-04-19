@@ -1,76 +1,52 @@
-import pygame 
-pygame.init()
-#pygame window 
+from tkinter import * 
+import random 
 
-backgroud_color = (0,0,0)
-(width, height) = (800, 800)
-
-screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption('Py')
-screen.fill(backgroud_color)
-
-pygame.display.flip()
+#Main menu
+start = open("start.txt", "r")
+global sys
+sys=int(start.read())
+print(sys)
+start.close
 
 
-x = 50
-y = 50
-width = 40
-height = 60
-vel = 5
+def menu():
+	global menu 
+	menu=tkinter.Tk()
+	menu.title("Final Pi Project")
+	menu.geometry("600x600")
+	# config background and cursor
+	menu.configure(background="black", cursor = "dot")
 
-running = True
-while running:
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			running = False
-	key = pygame.key.get_pressed()
+	print ("Game init. \n")
 
-	if key[pygame.K_LEFT]:
-		x -= vel
 
-	if key[pygame.K_RIGHT]:
-		x += vel
 
-	if key[pygame.K_UP]:
-		y -= vel
-
-	if key[pygame.K_DOWN]:
-		y += vel	
-#superclass Player 
-
-'''class Player(object):
-	def __init__(self, health, power):
+class Fighter(object):
+	def __init__(self, health ,strength, ult):
 		self.health = health
-		self.power = power
-
-	# Decorators
-
-	@property
-	def health(self):
-		return self._health
-	@health.setter
-	def health(self, value):
-		self._health = value
-	@property
-	def power(self):
-		return self._power
-	@power.setter
-	def power(self, value):
-		self._power = value'''
-''' TODO: stock image battle ground
-	main character/ enemy design
-	weapon design
-	maybe a lil anime??? with a dable of -tion
-	maybe some voice adlibs  
-'''
+		self.strength = strength
+		self.ult = ult
+#choose your fighter 
 
 
+class ninja(Fighter):
+	def __init__(self, health, strength, ult)
+		Fighter.__init__(self)
+		self.health = 150
+		self.strength = 100
+	def ult(self):
+
+	
 
 
+class gunsmith(Fighter):
+pass
 
 
+class mage(Fighter):
+pass
 
-
-
-
-pygame.quit()
+class tank(Fighter):
+pass
+#TODO: make fighter classes with unique hp power and ults 
+#use tkinter GUI
