@@ -1,52 +1,42 @@
-from tkinter import * 
-import random 
-
-#Main menu
-start = open("start.txt", "r")
-global sys
-sys=int(start.read())
-print(sys)
-start.close
-
-
-def menu():
-	global menu 
-	menu=tkinter.Tk()
-	menu.title("Final Pi Project")
-	menu.geometry("600x600")
-	# config background and cursor
-	menu.configure(background="black", cursor = "dot")
-
-	print ("Game init. \n")
-
-
-
+from tkinter import *
 class Fighter(object):
-	def __init__(self, health ,strength, ult):
-		self.health = health
-		self.strength = strength
-		self.ult = ult
-#choose your fighter 
+        def __init__(self,health,power):
+                self.health = health
+                self.power = power
+                self.inventory = []
+        #setters and getters
+        @property
+        def health(self):
+                return self._health
+        @health.setter
+        def health(self, value):
+                self._health = value
+        @property
+        def power(self):
+                return self._power
+        @power.setter
+        def power(self, value):
+                self._power = value
+        @property
+        def inventory(self):
+                return self._inventory
+        @inventory.setter
+        def inventory(self, value):
+                self._inventory = value
 
+        #add item to inventory
+        def addDrop(self, inventory):
+                self._inventory.append(drop)
 
-class ninja(Fighter):
-	def __init__(self, health, strength, ult)
-		Fighter.__init__(self)
-		self.health = 150
-		self.strength = 100
-	def ult(self):
+        def __str__(self):
+                #health
+                h = "Health: {} \n".format(self.health)
+                #damage
+                h += "You dealt: {} \n".format(self.power)
+                #item drop
+                h += "{} was added to your inventory".format(self.inventory)
+                return h
 
-	
-
-
-class gunsmith(Fighter):
-pass
-
-
-class mage(Fighter):
-pass
-
-class tank(Fighter):
-pass
-#TODO: make fighter classes with unique hp power and ults 
-#use tkinter GUI
+class Game(Frame):
+        def __init__(self, parent):
+                Fram.__init__(self,parent):
