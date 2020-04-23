@@ -39,16 +39,40 @@ class Fighter(object):
                 h += "You dealt: {} \n".format(self.power)
                 return h
 
+#the fighter classes
+##########################################################################################################
+# we need at least 2 of these done by the demo date
+class Gunsmith(Fighter):
+        def __init__ (self):
+                Fighter.__init__(self)
+
+
+class Magician(Fighter):
+        def __init__ (self):
+                Fighter.__init__(self)
+                
+
+class Brawler(Fighter):
+        def __init__ (self):
+                Fighter.__init__(self)
+
+
+class Demo(Fighter):
+        def __init__ (self):
+                Fighter.__init__(self)
+        
+
+#the GUI and main gameplay mechanics
 class Main(Frame):
         def __init__(self, parent):
                 Frame.__init__(self, parent)
 
                 #layout of the main menu
-                self.title = Label(parent, text="Welcome to Fighthon!", font=("Comic Sans", 30, "bold"), pady=30, bg="white", fg="black")
+                self.title = Label(parent, text="Welcome to Fighthon!", font=("Comic Sans", 30, "bold"), pady=40, bg="white", fg="black")
                 self.title.pack()
 
                 #starts the game
-                self.start = Button(parent, text="Start Game", command=self.start, pady=20, width=100)
+                self.start = Button(parent, text="Start Game", command=self.start, pady=20, width=60)
                 self.start.pack()
 
                 #exits the game
@@ -56,17 +80,51 @@ class Main(Frame):
                 self.exit.pack(side=BOTTOM)
 
         #starts the game, changing the window
+        #the gameplay window
         def start(self):
                 menu.destroy()
                 window = Tk()
                 window.title("Fighthon - Now Playing")
-                window.configure(background = "white", cursor = "dot")
+                window.configure(background = "white", cursor = "arrow")
                 window.attributes("-fullscreen", True)
+
+                #blank space followed by choose your fighter text
+                self.blank = Label(window, text="", pady=50, bg="white")
+                self.blank.pack()
+                
+                self.choice = Label(window, text="CHOOSE YOUR FIGHTER", font=("Comic Sans", 45, "bold", "italic"), pady=75, bg="white", fg="black")
+                self.choice.pack()
+
+                #choose your fighter buttons: gunsmith, magician, brawler, or demolitionist
+                self.gunsmith = Button(window, text="Gunsmith", command=self.chooseGunsmith, pady=25, width=60)
+                self.gunsmith.pack()
+
+                self.magician = Button(window, text="Magician", command=self.chooseMagician, pady=25, width=60)
+                self.magician.pack()
+
+                self.brawler = Button(window, text="Brawler", command=self.chooseBrawler, pady=25, width=60)
+                self.brawler.pack()
+
+                self.demo = Button(window, text="Demolitionist", command=self.chooseDemo, pady=25, width=60)
+                self.demo.pack()
 
                 #exits the game
                 self.exit = Button(window, text="Exit", command=exit, pady=2, width=10)
                 self.exit.pack(side=BOTTOM)
 
+        #button commands
+        #choose gunsmith
+        def chooseGunsmith(self):
+                pass
+        #choose magician
+        def chooseMagician(self):
+                pass
+        #choose brawler
+        def chooseBrawler(self):
+                pass
+        #choose demolitionist
+        def chooseDemo(self):
+                pass
 
 
         ###################
@@ -79,6 +137,8 @@ class Main(Frame):
                 self.items = ["sword", "gun", "healthkit"]
                 Fighter.inventory.append(items[randint(0, len(items))])
 
+                
+
         
 
 
@@ -89,7 +149,7 @@ class Main(Frame):
 menu = Tk()
 menu.title("Fighthon")
 menu.geometry("800x500")
-menu.configure(background="white", cursor="dot")
+menu.configure(background="white", cursor="arrow")
 
 # create the GUI as a Tkinter canvas inside the window
 g = Main(menu)
