@@ -116,12 +116,15 @@ class Main(Frame):
         #choose gunsmith
         def chooseGunsmith(self):
                 pass
+        
         #choose magician
         def chooseMagician(self):
                 pass
+        
         #choose brawler
         def chooseBrawler(self):
                 pass
+        
         #choose demolitionist
         def chooseDemo(self):
                 pass
