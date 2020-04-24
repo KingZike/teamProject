@@ -1,44 +1,32 @@
-from Tkinter import *
+from tkinter import *
 from random import randint
 
 class Fighter(object):
-        def __init__(self, health, power):
+        def __init__(self, name, health, moves, character):
+                self.name = name
                 self.health = health
-                self.power = power
+                self.moves = moves
                 self.inventory = []
+                self.attack = int['ATTACK']
+                self.defense = int['DEFENSE']
                 
-        #setters and getters
-        @property
-        def health(self):
-                return self._health
         
-        @health.setter
-        def health(self, value):
-                self._health = value
-                
-        @property
-        def power(self):
-                return self._power
-        
-        @power.setter
-        def power(self, value):
-                self._power = value
-                
-        @property
-        def inventory(self):
-                return self._inventory
-        
-        @inventory.setter
-        def inventory(self, value):
-                self._inventory = value
-
         def __str__(self):
                 #health
                 h = "Health: {} \n".format(self.health)
                 #damage
                 h += "You dealt: {} \n".format(self.power)
                 return h
+        def fighterStatus(self, enemy):
+        	#print status
+        	#pack to the right 
 
+
+
+        	while (self.health > 0) and (enemy.health > 0):
+        		#print staus of fighters while both are alive
+        		print(f"{self.name}\t\t\Health\t{self.health}")
+        		print(f"{enemy.name}\t\t\Health\t{enemy.health}")
 #the fighter classes
 ##########################################################################################################
 # we need at least 2 of these done by the demo date
