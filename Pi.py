@@ -2,56 +2,64 @@ from Tkinter import *
 from random import randint
 
 class Fighter(object):
-        def __init__(self, name, health, moves, character):
-                self.name = name
-                self.health = health
-                self.moves = moves
-                self.inventory = []
-                self.attack = int['ATTACK']
-                self.defense = int['DEFENSE']
+        def __init__(self, name, health, avatar):
+        	#every charachter has health bar 
+        	#moves
+        	#name
+        	#avatar img
+			self.name = name
+			self.avatar = avatar
+			self.health = health
+			self.moves = {}
+			self.inventory = []
+       #decorators
+        @property
+        def name(self):
+        	return self._name
+        @name.setter
+        def name(self, value):
+        	self._name = value
+        @property
+        def avatar(self):
+        	return self._avatar
+        @avatar.setter
+        def avatar(self,value):
+        	self._avatar = value
+        @property
+        def health(self):
+        	return self._health
+        @health.setter
+        def health(self,value):
+        	self._health = value
+        @property
+        def moves(self):
+        	return self._moves
+        @moves.setter
+        def moves(self,value):
+        	self._moves = value
+        @property
+        def inventory(self):
+        	return self._inventory
+        @inventory.setter
+        def inventory(self,value):
+        	self._inventory = value
                 
-        
-        def __str__(self):
-                #health
-                h = "Health: {} \n".format(self.health)
-                #damage
-                h += "You dealt: {} \n".format(self.power)
-                return h
-        
-        def fighterStatus(self, enemy):
-        	#print status
-        	#pack to the right 
-
-
-
-        	while (self.health > 0) and (enemy.health > 0):
-        		#print staus of fighters while both are alive
-        		print "{self.name}\t\t\Health\t{self.health}"
-        		print "{enemy.name}\t\t\Health\t{enemy.health}"
-        		
+        #base attack function
+		def attack(self):
+       		self._health -= 10
+       	#potion adds 10 hp
+        def potion(self):
+			self._health += 10
+		#key = move/ value= health
+		def moveSet(self, moves, health)
+			self._moves[moves] = health
+		#add item to the inventory
+		def addDrop(self, items):
+			self.items = ["sword", "gun", "healthkit"]
+			Fighter.inventory.append(items[randint(0, len(items))])
 #the fighter classes
 ##########################################################################################################
 # we need at least 2 of these done by the demo date
-class Gunsmith(Fighter):
-        def __init__ (self):
-                Fighter.__init__(self)
-
-
-class Magician(Fighter):
-        def __init__ (self):
-                Fighter.__init__(self)
-                
-
-class Brawler(Fighter):
-        def __init__ (self):
-                Fighter.__init__(self)
-
-
-class Demo(Fighter):
-        def __init__ (self):
-                Fighter.__init__(self)
-        
-
 #the GUI and main gameplay mechanics
 class Main(Frame):
         def __init__(self, parent):
@@ -68,7 +76,16 @@ class Main(Frame):
                 #exits the game
                 self.exit = Button(parent, text="Exit", command=exit, pady=2, width=10)
                 self.exit.pack(side=BOTTOM)
-
+        def character(self):
+        	c1 = "Gunsmith" , #image
+        	c2 = "Magician" , #image
+        	c3 = "Brawler" , #image
+        	c4 = "Demolitionist", #image
+        	#Gunsmith stats
+        	c1.health = 50
+        	c1.moveSet = "QuickShot" , -25
+        	c1.moveSet = "NO SCOPE" , -50
+        	#TODO: c2 - c4
         #starts the game, changing the window
         #the gameplay window
         def start(self):
@@ -170,24 +187,22 @@ class Main(Frame):
 
                 self.fightWindow()
 
-        def attack(self):
-                pass
+        def fighterStatus(self, enemy):
+        	#print status
+        	#pack to the right 
 
-        def defend(self):
-                pass
 
-        def potion(self):
-                pass
 
+        	while (self.health > 0) and (enemy.health > 0):
+        		#print staus of fighters while both are alive
+        		print "{self.name}\t\t\Health\t{self.health}"
+        		print "{enemy.name}\t\t\Health\t{enemy.health}"
         ###################
         # put all game elements below here
 
 
         
-        #add item to the inventory
-        def addDrop(self, items):
-                self.items = ["sword", "gun", "healthkit"]
-                Fighter.inventory.append(items[randint(0, len(items))])
+
 
                 
 
