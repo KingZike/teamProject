@@ -1,4 +1,4 @@
-from tkinter import *
+from Tkinter import *
 from random import randint
 
 class Fighter(object):
@@ -17,6 +17,7 @@ class Fighter(object):
                 #damage
                 h += "You dealt: {} \n".format(self.power)
                 return h
+        
         def fighterStatus(self, enemy):
         	#print status
         	#pack to the right 
@@ -25,8 +26,9 @@ class Fighter(object):
 
         	while (self.health > 0) and (enemy.health > 0):
         		#print staus of fighters while both are alive
-        		print(f"{self.name}\t\t\Health\t{self.health}")
-        		print(f"{enemy.name}\t\t\Health\t{enemy.health}")
+        		print "{self.name}\t\t\Health\t{self.health}"
+        		print "{enemy.name}\t\t\Health\t{enemy.health}"
+        		
 #the fighter classes
 ##########################################################################################################
 # we need at least 2 of these done by the demo date
@@ -70,6 +72,7 @@ class Main(Frame):
         #starts the game, changing the window
         #the gameplay window
         def start(self):
+                global window
                 menu.destroy()
                 window = Tk()
                 window.title("Fighthon - Now Playing")
@@ -100,23 +103,81 @@ class Main(Frame):
                 self.exit = Button(window, text="Exit", command=exit, pady=2, width=10)
                 self.exit.pack(side=BOTTOM)
 
+                window.mainloop()
+
+        def fightWindow(self):
+                global window 
+                window.destroy()
+                fight = Tk()
+                fight.title("Fighthon - In Game")
+                fight.configure(background = "white")
+                fight.attributes("-fullscreen", True)
+
+                img = None
+                imgScreen = Label(fight, image=img)
+                imgScreen.pack(side=TOP)
+
+                buttonPanel = Frame(fight)
+                buttonPanel.pack(side=LEFT)
+                
+                attackButton = Button(buttonPanel, text="Attack", command=self.attack, pady=25, width=50)
+                attackButton.pack()
+
+                defendButton = Button(buttonPanel, text="Defend", command=self.defend, pady=25, width=50)
+                defendButton.pack()
+
+                potionButton = Button(buttonPanel, text="Potion", command=self.potion, pady=25, width=50)
+                potionButton.pack()
+
+                statPanel = Frame(fight)
+                statPanel.pack(side=RIGHT)
+
+                statsList = Text(statPanel, bg="white")
+                statsList.pack()
+                statsList.insert(END, "big bologna")
+                statsList.config(state=DISABLED)
+
+                global character
+                
+                fight.mainloop()
+                
         #button commands
         #choose gunsmith
         def chooseGunsmith(self):
-                pass
+                global character
+                character = "Gunsmith"
+
+                self.fightWindow()
         
         #choose magician
         def chooseMagician(self):
-                pass
+                global character
+                character = "Magician"
+
+                self.fightWindow()
         
         #choose brawler
         def chooseBrawler(self):
-                pass
+                global character
+                character = "Brawler"
+
+                self.fightWindow()
         
         #choose demolitionist
         def chooseDemo(self):
+                global character
+                character = "Demolitionist"
+
+                self.fightWindow()
+
+        def attack(self):
                 pass
 
+        def defend(self):
+                pass
+
+        def potion(self):
+                pass
 
         ###################
         # put all game elements below here
@@ -134,7 +195,8 @@ class Main(Frame):
 
 
 
-                window.mainloop()
+                
+                
 #########################################################################
 # create the window
 menu = Tk()
