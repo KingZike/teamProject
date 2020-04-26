@@ -7,56 +7,70 @@ class Fighter(object):
         	#moves
         	#name
         	#avatar img
-			self.name = name
-			self.avatar = avatar
-			self.health = health
-			self.moves = {}
-			self.inventory = []
+	self.name = name
+	self.avatar = avatar
+	self.health = health
+	self.moves = {}
+	self.inventory = []
+			
        #decorators
         @property
         def name(self):
         	return self._name
+        
         @name.setter
         def name(self, value):
         	self._name = value
+        	
         @property
         def avatar(self):
         	return self._avatar
+        
         @avatar.setter
         def avatar(self,value):
         	self._avatar = value
+        	
         @property
         def health(self):
         	return self._health
+        
         @health.setter
         def health(self,value):
         	self._health = value
+        	
         @property
         def moves(self):
         	return self._moves
+        
         @moves.setter
         def moves(self,value):
         	self._moves = value
+        	
         @property
         def inventory(self):
         	return self._inventory
+        
         @inventory.setter
         def inventory(self,value):
         	self._inventory = value
                 
         #base attack function
-		def attack(self):
-       		self._health -= 10
+        def attack(self):
+       	self._health -= 10
        	#potion adds 10 hp
+       		
         def potion(self):
-			self._health += 10
-		#key = move/ value= health
-		def moveSet(self, moves, health)
-			self._moves[moves] = health
-		#add item to the inventory
-		def addDrop(self, items):
-			self.items = ["sword", "gun", "healthkit"]
-			Fighter.inventory.append(items[randint(0, len(items))])
+	self._health += 10
+	
+        #key = move/ value= health
+        def moveSet(self, moves, health)
+                self._moves[moves] = health
+                
+        #add item to the inventory
+        def addDrop(self, items):
+                self.items = ["sword", "gun", "healthkit"]
+                Fighter.inventory.append(items[randint(0, len(items))])
+                
 #the fighter classes
 ##########################################################################################################
 # we need at least 2 of these done by the demo date
@@ -76,6 +90,7 @@ class Main(Frame):
                 #exits the game
                 self.exit = Button(parent, text="Exit", command=exit, pady=2, width=10)
                 self.exit.pack(side=BOTTOM)
+                
         def character(self):
         	c1 = "Gunsmith" , #image
         	c2 = "Magician" , #image
@@ -86,6 +101,7 @@ class Main(Frame):
         	c1.moveSet = "QuickShot" , -25
         	c1.moveSet = "NO SCOPE" , -50
         	#TODO: c2 - c4
+        	
         #starts the game, changing the window
         #the gameplay window
         def start(self):
