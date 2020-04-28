@@ -3,15 +3,15 @@ from random import randint
 
 class Fighter(object):
         def __init__(self, name, health, avatar):
-        	#every charachter has health bar 
+                #every charachter has health bar 
         	#moves
         	#name
         	#avatar img
-	self.name = name
-	self.avatar = avatar
-	self.health = health
-	self.moves = {}
-	self.inventory = []
+                self.name = name
+                self.avatar = avatar
+                self.health = health
+                self.moves = {}
+                self.inventory = []
 			
        #decorators
         @property
@@ -56,14 +56,14 @@ class Fighter(object):
                 
         #base attack function
         def attack(self):
-       	self._health -= 10
+                self._health -= 10
        	#potion adds 10 hp
        		
         def potion(self):
-	self._health += 10
+                self._health += 10
 	
         #key = move/ value= health
-        def moveSet(self, moves, health)
+        def moveSet(self, moves, health):
                 self._moves[moves] = health
                 
         #add item to the inventory
@@ -153,13 +153,10 @@ class Main(Frame):
                 buttonPanel = Frame(fight)
                 buttonPanel.pack(side=LEFT)
                 
-                attackButton = Button(buttonPanel, text="Attack", command=self.attack, pady=25, width=50)
+                attackButton = Button(buttonPanel, text="Attack", command=Fighter.attack, pady=25, width=50)
                 attackButton.pack()
 
-                defendButton = Button(buttonPanel, text="Defend", command=self.defend, pady=25, width=50)
-                defendButton.pack()
-
-                potionButton = Button(buttonPanel, text="Potion", command=self.potion, pady=25, width=50)
+                potionButton = Button(buttonPanel, text="Potion", command=Fighter.potion, pady=25, width=50)
                 potionButton.pack()
 
                 statPanel = Frame(fight)
@@ -213,6 +210,8 @@ class Main(Frame):
         		#print staus of fighters while both are alive
         		print "{self.name}\t\t\Health\t{self.health}"
         		print "{enemy.name}\t\t\Health\t{enemy.health}"
+
+        		
         ###################
         # put all game elements below here
 
