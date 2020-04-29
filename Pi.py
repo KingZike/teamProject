@@ -2,14 +2,14 @@ from Tkinter import *
 from random import randint
 
 class Fighter(object):
-        def __init__(self, name, health, avatar):
+        def __init__(self, name, avatar):
                 #every charachter has health bar 
         	#moves
         	#name
         	#avatar img
                 self.name = name
                 self.avatar = avatar
-                self.health = health
+                self.health = 100
                 self.moves = {}
                 self.inventory = []
 			
@@ -63,13 +63,26 @@ class Fighter(object):
                 self._health += 10
 	
         #key = move/ value= health
-        def moveSet(self, moves, health):
-                self._moves[moves] = health
+        def addMove(self, move, dmg):
+                self._moves[move] = dmg
                 
         #add item to the inventory
         def addDrop(self, items):
                 self.items = ["sword", "gun", "healthkit"]
                 Fighter.inventory.append(items[randint(0, len(items))])
+
+        def __str__(self):
+                s = "{} vs {}\n".format(self.name, self.name)
+
+                s += "Your move set: \n"
+                for move in self.moves.keys():
+                        s += move + "\n"
+
+                s += "Current health: {}".format(Fighter.health)
+
+                s += "Enemy health: {}".format(Fighter.health)
+
+                return s
                 
 #the fighter classes
 ##########################################################################################################
@@ -164,18 +177,17 @@ class Main(Frame):
 
                 statsList = Text(statPanel, bg="white")
                 statsList.pack()
-                statsList.insert(END, "big bologna")
+                statsList.insert(END, Fighter.s)
                 statsList.config(state=DISABLED)
-
-                global character
                 
                 fight.mainloop()
                 
         #button commands
         #choose gunsmith
         def chooseGunsmith(self):
-                global character
-                character = "Gunsmith"
+                character = Fighter("Gunsmith", "gunsmith.gif")
+                character.health = 125
+                character.addMove("Shoot", 20)
 
                 self.fightWindow()
         
@@ -203,9 +215,6 @@ class Main(Frame):
         def fighterStatus(self, enemy):
         	#print status
         	#pack to the right 
-
-
-
         	while (self.health > 0) and (enemy.health > 0):
         		#print staus of fighters while both are alive
         		print "{self.name}\t\t\Health\t{self.health}"
