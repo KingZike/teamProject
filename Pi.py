@@ -177,7 +177,7 @@ class Main(Frame):
 
                 statsList = Text(statPanel, bg="white")
                 statsList.pack()
-                statsList.insert(END, Fighter.s)
+                statsList.insert(END, self.character)
                 statsList.config(state=DISABLED)
                 
                 fight.mainloop()
