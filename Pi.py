@@ -9,7 +9,7 @@ class Fighter(object):
         	#avatar img
                 self.name = name
                 self.avatar = avatar
-                self.health = 100
+                self.health = None
                 self.moves = {}
                 self.inventory = []
 			
@@ -53,12 +53,15 @@ class Fighter(object):
         @inventory.setter
         def inventory(self,value):
         	self._inventory = value
+
+        def setHealth(self, health):
+                self._health = health
                 
         #base attack function
         def attack(self):
                 self._health -= 10
-       	#potion adds 10 hp
-       		
+
+        #potion adds 10 hp	
         def potion(self):
                 self._health += 10
 	
@@ -69,18 +72,19 @@ class Fighter(object):
         #add item to the inventory
         def addDrop(self, items):
                 self.items = ["sword", "gun", "healthkit"]
-                Fighter.inventory.append(items[randint(0, len(items))])
+                self.inventory.append(items[randint(0, len(items))])
 
         def __str__(self):
-                s = "{} vs {}\n".format(self.name, self.name)
+                s = "{} vs {}\n\n".format(self.name, self.name)
 
-                s += "Your move set: \n"
+                s += "Your move set: "
                 for move in self.moves.keys():
-                        s += move + "\n"
+                        s += move + " - "
+                s += "\n\n"
 
-                s += "Current health: {}".format(Fighter.health)
+                s += "Current health: {}\n\n".format(self.health)
 
-                s += "Enemy health: {}".format(Fighter.health)
+                s += "Enemy health: {}\n\n".format(self.health)
 
                 return s
                 
@@ -105,15 +109,24 @@ class Main(Frame):
                 self.exit.pack(side=BOTTOM)
                 
         def character(self):
-        	c1 = "Gunsmith" , #image
-        	c2 = "Magician" , #image
-        	c3 = "Brawler" , #image
-        	c4 = "Demolitionist", #image
+        	c1 = Fighter("Gunsmith" , "gunsmith.gif")
+        	c2 = Fighter("Magician" , "magician.gif")
+        	c3 = Fighter("Brawler" , "brawler.gif")
+        	c4 = Fighter("Demolitionist", "demo.gif")
+        	
         	#Gunsmith stats
-        	c1.health = 50
-        	c1.moveSet = "QuickShot" , -25
-        	c1.moveSet = "NO SCOPE" , -50
-        	#TODO: c2 - c4
+        	c1.setHealth(50)
+        	c1.addMove("Buckshot" , 25)
+        	c1.addMove("Pistol Whip" , 50)
+
+        	#Magician stats
+
+        	#Brawler stats
+
+        	#Demolitionist stats
+
+        	#set character choice
+        	Main.character = c1
         	
         #starts the game, changing the window
         #the gameplay window
@@ -159,7 +172,7 @@ class Main(Frame):
                 fight.configure(background = "white")
                 fight.attributes("-fullscreen", True)
 
-                img = None
+                img = "gunsmith.gif"
                 imgScreen = Label(fight, image=img)
                 imgScreen.pack(side=TOP)
 
@@ -177,18 +190,18 @@ class Main(Frame):
 
                 statsList = Text(statPanel, bg="white")
                 statsList.pack()
-                statsList.insert(END, self.character)
+                statsList.insert(END, str(self.character))
                 statsList.config(state=DISABLED)
+
+                self.exit = Button(window, text="Exit", command=exit, pady=2, width=10)
+                self.exit.pack(side=BOTTOM)
                 
                 fight.mainloop()
                 
         #button commands
         #choose gunsmith
         def chooseGunsmith(self):
-                character = Fighter("Gunsmith", "gunsmith.gif")
-                character.health = 125
-                character.addMove("Shoot", 20)
-
+                self.character()
                 self.fightWindow()
         
         #choose magician
