@@ -21,7 +21,7 @@ class Fighter(object):
         @name.setter
         def name(self, value):
         	self._name = value
-        	
+
         @property
         def avatar(self):
         	return self._avatar
@@ -37,7 +37,7 @@ class Fighter(object):
         @health.setter
         def health(self,value):
         	self._health = value
-        	
+
         @property
         def moves(self):
         	return self._moves
@@ -75,9 +75,9 @@ class Fighter(object):
                 self.items = ["sword", "gun", "healthkit"]
                 self.inventory.append(items[randint(0, len(items))])
 
-        def __str__(self):
-                s = "{} vs {}\n\n".format(self.name, self.name)
-
+        def __str__(self, enemy):
+                s = "{} vs {}\n\n".format(self.name, enemy.name)
+        
                 s += "Your move set: "
                 for move in self.moves.keys():
                         s += move + " - "
@@ -85,13 +85,11 @@ class Fighter(object):
 
                 s += "Current health: {}\n\n".format(self.health)
 
-                s += "Enemy health: {}\n\n".format(self.health)
+                s += "Enemy health: {}\n\n".format(enemy.health)
 
                 return s
                 
-#the fighter classes
 ##########################################################################################################
-# we need at least 2 of these done by the demo date
 #the GUI and main gameplay mechanics
 class Main(Frame):
         def __init__(self, parent):
@@ -109,29 +107,6 @@ class Main(Frame):
                 self.exit = Button(parent, text="Exit", command=exit, pady=2, width=10)
                 self.exit.pack(side=BOTTOM)
                 
-        def character(self):
-                c1 = Fighter("Gunsmith" , "gunsmith.gif")
-                c2 = Fighter("Magician" , "magician.gif")
-                c3 = Fighter("Brawler" , "brawler.gif")
-                c4 = Fighter("Demolitionist", "demo.gif")
-                
-                #Gunsmith stats
-                c1.setHealth(50)
-                c1.addMove("Buckshot" , 25)
-                c1.addMove("Pistol Whip" , 50)
-
-                #Magician stats
-                c2.setHealth(60)
-                c2.addMove("Ace of Spades", 20)
-                #Brawler stats
-                c3.setHealth(100)
-                c3.addMove("Flying Knee", 30)
-                #Demolitionist stats
-                c4.setHealth(150)
-                c4.addMove("Shell Shock", 20) #20 damage but -15 health to self 
-                #set character choice
-                Main.character = c1
-
         #enemy function who you will fight 
         def enemy(self):
                 pass
@@ -180,10 +155,14 @@ class Main(Frame):
                 fight.configure(background = "white")
                 fight.attributes("-fullscreen", True)
 
+                self.exit = Button(fight, text="Exit", command=exit, pady=2, width=10)
+                self.exit.pack(side=BOTTOM)
+
                 img = PhotoImage(file ="gunsmith.gif")
                 imgScreen = Label(fight, image=img)
                 imgScreen.pack(side=BOTTOM)
                 imgScreen.pack_propagate(False)
+                
                 buttonPanel = Frame(fight)
                 buttonPanel.pack(side=LEFT)
                 
@@ -201,50 +180,56 @@ class Main(Frame):
                 statsList.insert(END, str(self.character))
                 statsList.config(state=DISABLED)
 
-                self.exit = Button(window, text="Exit", command=exit, pady=2, width=10)
-                self.exit.pack(side=BOTTOM)
-                
                 fight.mainloop()
                 
         #button commands
         #choose gunsmith
         def chooseGunsmith(self):
-                self.character()
+                c1 = Fighter("Gunsmith" , "gunsmith.gif")
+
+                Main.character = c1
+                
+                #Gunsmith stats
+                c1.setHealth(50)
+                c1.addMove("Buckshot" , 25)
+                c1.addMove("Pistol Whip" , 50)
+
                 self.fightWindow()
+                self.enemy()
         
         #choose magician
         def chooseMagician(self):
-                self.character()
+                c2 = Fighter("Magician" , "magician.gif")
+
+                Main.character = c2
+
+                #Magician stats
+                c2.setHealth(75)
+                c2.addMove("Ace of Spades", 20)
+                
                 self.fightWindow()
         
         #choose brawler
         def chooseBrawler(self):
-                self.character()
+                c3 = Fighter("Brawler" , "brawler.gif")
+                
+                #Brawler stats
+                c3.setHealth(100)
+                c3.addMove("Flying Knee", 30)
+                
                 self.fightWindow()
-        
         
         #choose demolitionist
         def chooseDemo(self):
-                self.character()
+                c4 = Fighter("Demolitionist", "demo.gif")
+                
+                #Demolitionist stats
+                c4.setHealth(150)
+                c4.addMove("Shell Shock", 20) #20 damage but -15 health to self
+                
                 self.fightWindow()
-        
-
-        		
-        ###################
-        # put all game elements below here
-
-
-        
-
-
                 
-
-        
-
-
-
-                
-                
+        	           
 #########################################################################
 # create the window
 menu = Tk()
