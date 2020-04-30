@@ -63,7 +63,8 @@ class Fighter(object):
 
         #potion adds 10 hp	
         def potion(self):
-                self._health += 10
+                if potion == True:
+                        self._health += 10
 	
         #key = move/ value= health
         def addMove(self, move, dmg):
@@ -109,24 +110,31 @@ class Main(Frame):
                 self.exit.pack(side=BOTTOM)
                 
         def character(self):
-        	c1 = Fighter("Gunsmith" , "gunsmith.gif")
-        	c2 = Fighter("Magician" , "magician.gif")
-        	c3 = Fighter("Brawler" , "brawler.gif")
-        	c4 = Fighter("Demolitionist", "demo.gif")
-        	
-        	#Gunsmith stats
-        	c1.setHealth(50)
-        	c1.addMove("Buckshot" , 25)
-        	c1.addMove("Pistol Whip" , 50)
+                c1 = Fighter("Gunsmith" , "gunsmith.gif")
+                c2 = Fighter("Magician" , "magician.gif")
+                c3 = Fighter("Brawler" , "brawler.gif")
+                c4 = Fighter("Demolitionist", "demo.gif")
+                
+                #Gunsmith stats
+                c1.setHealth(50)
+                c1.addMove("Buckshot" , 25)
+                c1.addMove("Pistol Whip" , 50)
 
-        	#Magician stats
+                #Magician stats
+                c2.setHealth(60)
+                c2.addMove("Ace of Spades", 20)
+                #Brawler stats
+                c3.setHealth(100)
+                c3.addMove("Flying Knee", 30)
+                #Demolitionist stats
+                c4.setHealth(150)
+                c4.addMove("Shell Shock", 20) #20 damage but -15 health to self 
+                #set character choice
+                Main.character = c1
 
-        	#Brawler stats
-
-        	#Demolitionist stats
-
-        	#set character choice
-        	Main.character = c1
+        #enemy function who you will fight 
+        def enemy(self):
+                pass
         	
         #starts the game, changing the window
         #the gameplay window
@@ -172,10 +180,10 @@ class Main(Frame):
                 fight.configure(background = "white")
                 fight.attributes("-fullscreen", True)
 
-                img = "gunsmith.gif"
+                img = PhotoImage(file ="gunsmith.gif")
                 imgScreen = Label(fight, image=img)
-                imgScreen.pack(side=TOP)
-
+                imgScreen.pack(side=BOTTOM)
+                imgScreen.pack_propagate(False)
                 buttonPanel = Frame(fight)
                 buttonPanel.pack(side=LEFT)
                 
@@ -206,32 +214,20 @@ class Main(Frame):
         
         #choose magician
         def chooseMagician(self):
-                global character
-                character = "Magician"
-
+                self.character()
                 self.fightWindow()
         
         #choose brawler
         def chooseBrawler(self):
-                global character
-                character = "Brawler"
-
+                self.character()
                 self.fightWindow()
+        
         
         #choose demolitionist
         def chooseDemo(self):
-                global character
-                character = "Demolitionist"
-
+                self.character()
                 self.fightWindow()
-
-        def fighterStatus(self, enemy):
-        	#print status
-        	#pack to the right 
-        	while (self.health > 0) and (enemy.health > 0):
-        		#print staus of fighters while both are alive
-        		print "{self.name}\t\t\Health\t{self.health}"
-        		print "{enemy.name}\t\t\Health\t{enemy.health}"
+        
 
         		
         ###################
