@@ -1,7 +1,6 @@
 from Tkinter import *
 from random import randint
 
-
 class Fighter(object):
     def __init__(self, name, avatar):
         # every character has health bar
@@ -109,10 +108,8 @@ class Main(Frame):
         self.mainCharacter = None
         self.enemyChar = None
 
-
         # layout of the main menu
-        self.title = Label(parent, text="Welcome to Fighthon!", font=("Comic Sans", 30, "bold"), pady=40, bg="white",
-                           fg="black")
+        self.title = Label(parent, text="Welcome to Fighthon!", font=("Comic Sans", 30, "bold"), pady=40, bg="white", fg="black")
         self.title.pack()
 
         # starts the game
@@ -128,8 +125,8 @@ class Main(Frame):
         # x = rindint(0,10)
         enemy1 = Fighter("Barbarian", "gunsmith.gif")
         enemy1.setHealth(randint(50, 100))
-        enemy1.addMove("charge", 35)
-        enemy1.addMove("quick slash", 20)
+        enemy1.addMove("Charge", 35)
+        enemy1.addMove("Quick Slash", 20)
         self.enemyChar = enemy1
 
     def attackMove(self):
@@ -140,19 +137,12 @@ class Main(Frame):
         if self.mainCharacter.health <= 0:
             statsList.insert(END, "You lost!")
             buttonPanel.destroy()
-
         elif self.enemyChar.health <= 0:
             statsList.insert(END, "You Won!")
             window.destroy
-
-
         else:
             statsList.insert(END, self.mainCharacter)
             statsList.insert(END, self.enemyChar)
-
-
-
-
 
     # starts the game, changing the window
     # the gameplay window
@@ -164,13 +154,11 @@ class Main(Frame):
         window.configure(background="white", cursor="arrow")
         window.attributes("-fullscreen", True)
 
-
         # blank space followed by choose your fighter text
         self.blank = Label(window, text="", pady=50, bg="white")
         self.blank.pack()
 
-        self.choice = Label(window, text="CHOOSE YOUR FIGHTER", font=("Comic Sans", 45, "bold", "italic"), pady=75,
-                            bg="white", fg="black")
+        self.choice = Label(window, text="CHOOSE YOUR FIGHTER", font=("Comic Sans", 45, "bold", "italic"), pady=75, bg="white", fg="black")
         self.choice.pack()
 
         # choose your fighter buttons: gunsmith, magician, brawler, or demolitionist
@@ -201,7 +189,6 @@ class Main(Frame):
         fight.attributes("-fullscreen", True)
         self.window = window
 
-
         self.exit = Button(fight, text="Exit", command=exit, pady=2, width=10)
         self.exit.pack(side=BOTTOM)
 
@@ -218,16 +205,16 @@ class Main(Frame):
         statPanel = Frame(fight)
         statPanel.pack(side=RIGHT)
 
+        global statsList
         statsList = Text(statPanel, bg="white")
         statsList.pack()
         statsList.insert(END, self.mainCharacter)
         statsList.insert(END, self.enemyChar)
-        statsList.config(state=NORMAL)
-        global statsList
+        statsList.config(state=DISABLED)
 
+        global buttonPanel
         buttonPanel = Frame(fight)
         buttonPanel.pack(side=LEFT)
-        global buttonPanel
 
         attackButton = Button(buttonPanel, text="Attack", command=self.attackMove, pady=25, width=50, state=ACTIVE)
         attackButton.pack()
@@ -238,16 +225,12 @@ class Main(Frame):
         statPanel = Frame(fight)
         statPanel.pack(side=RIGHT)
 
-
-
         fight.mainloop()
 
     # button commands
     # choose gunsmith
     def chooseGunsmith(self):
         c1 = Fighter("Gunsmith", "gunsmith.gif")
-
-
 
         # Gunsmith stats
         c1.setHealth(50)
@@ -258,7 +241,6 @@ class Main(Frame):
         c1.enemy = self.enemyChar
         self.mainCharacter = c1
         self.fightWindow()
-
 
     # choose magician
     def chooseMagician(self):
@@ -273,7 +255,6 @@ class Main(Frame):
         self.mainCharacter = c2
         self.fightWindow()
 
-
     # choose brawler
     def chooseBrawler(self):
         c3 = Fighter("Brawler", "brawler.GIF")
@@ -285,7 +266,6 @@ class Main(Frame):
         self.enemy()
         self.mainCharacter = c3
         self.fightWindow()
-
 
     # choose demolitionist
     def chooseDemo(self):
@@ -299,7 +279,6 @@ class Main(Frame):
         self.mainCharacter = c4
         self.fightWindow()
 
-
 #########################################################################
 # create the window
 menu = Tk()
@@ -312,6 +291,3 @@ g = Main(menu)
 
 # wait for the window to close
 menu.mainloop()
-
-
-
