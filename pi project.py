@@ -123,7 +123,7 @@ class Main(Frame):
     # enemy function who you will fight
     def enemy(self):
         # x = rindint(0,10)
-        enemy1 = Fighter("Barbarian", "gunsmith.gif")
+        enemy1 = Fighter("Barbarian", "barbarian.gif")
         enemy1.setHealth(randint(50, 100))
         enemy1.addMove("Charge", 35)
         enemy1.addMove("Quick Slash", 20)
