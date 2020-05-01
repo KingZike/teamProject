@@ -132,12 +132,26 @@ class Main(Frame):
         enemy1.addMove("quick slash", 20)
         self.enemyChar = enemy1
 
-    def attackMove(self, window):
-
+    def attackMove(self):
         self.enemyChar.health -= 10
-        window.delete("1.0", "end")
-        window.insert(END, self.mainCharacter)
-        window.insert(END, self.enemyChar)
+        self.mainCharacter.health -= randint(1, 20)
+        statsList.delete("1.0", "end")
+
+        if self.mainCharacter.health <= 0:
+            statsList.insert(END, "You lost!")
+            buttonPanel.destroy()
+
+        elif self.enemyChar.health <= 0:
+            statsList.insert(END, "You Won!")
+            window.destroy
+
+
+        else:
+            statsList.insert(END, self.mainCharacter)
+            statsList.insert(END, self.enemyChar)
+
+
+
 
 
     # starts the game, changing the window
@@ -185,6 +199,7 @@ class Main(Frame):
         fight.title("Fighthon - In Game")
         fight.configure(background="white")
         fight.attributes("-fullscreen", True)
+        self.window = window
 
 
         self.exit = Button(fight, text="Exit", command=exit, pady=2, width=10)
@@ -208,11 +223,13 @@ class Main(Frame):
         statsList.insert(END, self.mainCharacter)
         statsList.insert(END, self.enemyChar)
         statsList.config(state=NORMAL)
+        global statsList
 
         buttonPanel = Frame(fight)
         buttonPanel.pack(side=LEFT)
+        global buttonPanel
 
-        attackButton = Button(buttonPanel, text="Attack", command=self.attackMove(statsList), pady=25, width=50)
+        attackButton = Button(buttonPanel, text="Attack", command=self.attackMove, pady=25, width=50, state=ACTIVE)
         attackButton.pack()
 
         potionButton = Button(buttonPanel, text="Potion", command=self.mainCharacter.potion, pady=25, width=50)
