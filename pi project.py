@@ -4,7 +4,7 @@ from random import randint
 
 class Fighter(object):
     def __init__(self, name, avatar):
-        # every charachter has health bar
+        # every character has health bar
         # moves
         # name
         # avatar img
@@ -61,12 +61,12 @@ class Fighter(object):
 
     # base attack function
     def attack(self):
-        self._health -= 10
+        self.enemy.health -= 10
 
     # potion adds 10 hp
     def potion(self):
         if potion == True:
-            self._health += 10
+            self.health += 10
 
     # key = move/ value= health
     def addMove(self, move, dmg):
@@ -77,17 +77,26 @@ class Fighter(object):
         self.items = ["sword", "gun", "healthkit"]
         self.inventory.append(items[randint(0, len(items))])
 
+
     def __str__(self):
-        s = "{} vs {}\n\n".format(self.name, "Barbarian")
+        s = ""
+        if self.name != "Barbarian":
+           s = "{} vs {}\n\n".format(self.name, "Barbarian")
+           s += "Your move set: "
+           for move in self.moves.keys():
+               s += move + " - "
+           s += "\n\n"
 
-        s += "Your move set: "
-        for move in self.moves.keys():
-            s += move + " - "
-        s += "\n\n"
+           s += "Current health: {}\n\n".format(self.health)
 
-        s += "Current health: {}\n\n".format(self.health)
+        else:
+            s += "Their move set: "
+            for move in self.moves.keys():
+                s += move + " - "
+            s += "\n\n"
 
-        s += "Enemy health: {}\n\n".format(6)
+            s += "Enemy health: {}\n\n".format(self.health)
+
 
         return s
 
@@ -99,6 +108,7 @@ class Main(Frame):
         Frame.__init__(self, parent)
         self.mainCharacter = None
         self.enemyChar = None
+
 
         # layout of the main menu
         self.title = Label(parent, text="Welcome to Fighthon!", font=("Comic Sans", 30, "bold"), pady=40, bg="white",
@@ -118,8 +128,16 @@ class Main(Frame):
         # x = rindint(0,10)
         enemy1 = Fighter("Barbarian", "gunsmith.gif")
         enemy1.setHealth(randint(50, 100))
+        enemy1.addMove("charge", 35)
+        enemy1.addMove("quick slash", 20)
         self.enemyChar = enemy1
 
+    def attackMove(self, window):
+
+        self.enemyChar.health -= 10
+        window.delete("1.0", "end")
+        window.insert(END, self.mainCharacter)
+        window.insert(END, self.enemyChar)
 
 
     # starts the game, changing the window
@@ -182,15 +200,6 @@ class Main(Frame):
         imgScreen1.pack(side=RIGHT)
         imgScreen1.pack_propagate(False)
 
-        buttonPanel = Frame(fight)
-        buttonPanel.pack(side=LEFT)
-
-        attackButton = Button(buttonPanel, text="Attack", command=Fighter.attack, pady=25, width=50)
-        attackButton.pack()
-
-        potionButton = Button(buttonPanel, text="Potion", command=Fighter.potion, pady=25, width=50)
-        potionButton.pack()
-
         statPanel = Frame(fight)
         statPanel.pack(side=RIGHT)
 
@@ -198,7 +207,21 @@ class Main(Frame):
         statsList.pack()
         statsList.insert(END, self.mainCharacter)
         statsList.insert(END, self.enemyChar)
-        statsList.config(state=DISABLED)
+        statsList.config(state=NORMAL)
+
+        buttonPanel = Frame(fight)
+        buttonPanel.pack(side=LEFT)
+
+        attackButton = Button(buttonPanel, text="Attack", command=self.attackMove(statsList), pady=25, width=50)
+        attackButton.pack()
+
+        potionButton = Button(buttonPanel, text="Potion", command=self.mainCharacter.potion, pady=25, width=50)
+        potionButton.pack()
+
+        statPanel = Frame(fight)
+        statPanel.pack(side=RIGHT)
+
+
 
         fight.mainloop()
 
@@ -215,6 +238,7 @@ class Main(Frame):
         c1.addMove("Pistol Whip", 50)
 
         self.enemy()
+        c1.enemy = self.enemyChar
         self.mainCharacter = c1
         self.fightWindow()
 
@@ -235,7 +259,7 @@ class Main(Frame):
 
     # choose brawler
     def chooseBrawler(self):
-        c3 = Fighter("Brawler", "brawler.gif")
+        c3 = Fighter("Brawler", "brawler.GIF")
 
         # Brawler stats
         c3.setHealth(100)
