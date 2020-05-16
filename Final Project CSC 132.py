@@ -173,7 +173,7 @@ class Main(Frame):
 
 
         # layout of the main menu
-        self.title = Label(parent, text="Welcome to Fighthon!", font=("Comic Sans", 30, "bold"), pady=40, bg="white",
+        self.title = Label(parent, text="Welcome to Fighthon!", font=("Comic Sans", 30, "bold"), pady=40, bg="red",
                            fg="black")
         self.title.pack()
 
@@ -314,12 +314,12 @@ class Main(Frame):
         menu.destroy()
         window = Tk()
         window.title("Fighthon - Now Playing")
-        window.configure(background="white", cursor="arrow")
+        window.configure(background="red", cursor="dot")
         window.attributes("-fullscreen", True)
 
 
         # blank space followed by choose your fighter text
-        self.blank = Label(window, text="", pady=50, bg="white")
+        self.blank = Label(window, text="", pady=50, bg="red")
         self.blank.pack()
 
         self.choice = Label(window, text="CHOOSE YOUR FIGHTER", font=("Comic Sans", 45, "bold", "italic"), pady=75,
@@ -351,7 +351,7 @@ class Main(Frame):
         window.destroy()
         fight = Tk()
         fight.title("Fighthon - In Game")
-        fight.configure(background = "red")
+        fight.configure(background = "red", cursor = "dot")
         fight.attributes("-fullscreen", True)
         #mixer.music.init()
         #mixer.music.load("song.wav")
@@ -471,7 +471,7 @@ class Main(Frame):
 menu = Tk()
 menu.title("Fighthon")
 menu.geometry("800x500")
-menu.configure(background="white", cursor="arrow")
+menu.configure(background="red", cursor="dot")
 
 # create the GUI as a Tkinter canvas inside the window
 g = Main(menu)
