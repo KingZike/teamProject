@@ -6,6 +6,7 @@
 import winsound 
 from Tkinter import *
 from random import *
+
 class Fighter(object):
     def __init__(self, name, avatar):
         #each fighter has a name, avatar, health bar, move set, potion, and mana.
@@ -20,6 +21,7 @@ class Fighter(object):
         self.maxMana = 50
         self.mana = 50
         self.mainChar = False
+        
     #setters and getters
     @property
     def name(self):
@@ -102,6 +104,7 @@ class Fighter(object):
     def __str__(self):
         num = 1
         s = ""
+        
         if self.mainChar != False:
             s = "{} vs {}\n\n".format(self.name, self.opponent)
             s += "\n"
@@ -121,7 +124,9 @@ class Fighter(object):
         else:
             s += "\n"
             s += "Enemy health: {} / {}\n\n".format(self.health, self.maxHealth)
+            
         return s
+    
 ##########################################################################################################
 # the GUI and main gameplay mechanics
 class Main(Frame):
@@ -136,24 +141,28 @@ class Main(Frame):
         self.title.pack()
 
         #starts the game
-        self.start = Button(parent, text="Start Game", command=self.start, pady=20, width=60)
-        self.start.pack()
+        self.startButton = Button(parent, text="Start Game", command=lambda:(menu.destroy(), self.start()), pady=20, width=60)
+        self.startButton.pack()
 
         #exits the game
         self.exit = Button(parent, text="Exit", command=exit, pady=2, width=10)
         self.exit.pack(side=BOTTOM)
+        
     #enemy function who you will fight
     def enemy(self):
         enemies = ["Barbarian", "Goblin", "Thief", "Wild Wolf"]
         enemy_avi = ["barbarian.gif", "goblin.gif", "thief.gif", "wildwolf.gif"]
-        x = randint(0, len(enemy_avi)-1)
+        x = randint(0, len(enemies)-1)
         enemy1 = Fighter(enemies[x], enemy_avi[x])
         enemy1.setHealth(randint(50, 100))
         enemy1.maxHealth = enemy1.health
         self.enemyChar = enemy1
+        
     def attackMove(self, ability = None):
         #a list that creates different damage chances
         damageAmount = [1, 3, 3, 3, 5, 8]
+        #a list that creates different mana chances on enemy kill
+        killMana =[5, 5, 10, 15, 15, 15, 20, 25]
         #checks to see if you used a basic attack
         if ability == None:
             self.enemyChar.health -= 10
@@ -161,10 +170,13 @@ class Main(Frame):
             statsList.delete("1.0", "end")
             #condition for losing
             #stops the background music
+            
             if self.mainCharacter.health <= 0:
                 winsound.PlaySound(None, winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC | winsound.SND_ALIAS )
                 statsList.insert(END, "You lost!" + "\n\n" + "You have defeated " + str(self.mainCharacter.wins) + " enemies!")
                 buttonPanel.destroy()
+                self.lossPanel()
+                
             #condition for beating an enemy
             #adds a win to the win counter and player gains 1 potion
             elif self.enemyChar.health <= 0:
@@ -172,12 +184,15 @@ class Main(Frame):
                 self.mainCharacter.enemy = self.enemyChar
                 self.mainCharacter.wins += 1
                 self.mainCharacter.potion += 1
+                self.mainCharacter.mana += killMana[randint(0, len(killMana) - 1)]
                 statsList.insert(END, self.mainCharacter)
                 statsList.insert(END, self.enemyChar)
                 
             else:
+                self.mainCharacter.mana += randint(0, 3)
                 statsList.insert(END, self.mainCharacter)
                 statsList.insert(END, self.enemyChar)
+                
         #checks if you used and ability
         #handles mana cost and damage dealt and recieved    
         else:
@@ -189,10 +204,13 @@ class Main(Frame):
                 statsList.delete("1.0", "end")
                 #condition for losing
                 #stops background music
+                
                 if self.mainCharacter.health <= 0:
                     winsound.PlaySound(None, winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC | winsound.SND_ALIAS )
                     statsList.insert(END, "You lost!" + "\n\n" + "You have defeated " + str(self.mainCharacter.wins) + " enemies!")
                     buttonPanel.destroy()
+                    self.lossPanel()
+                    
                 #condition for beating and enemy
                 #adds to win counter and gives player a potion
                 elif self.enemyChar.health <= 0:
@@ -200,18 +218,21 @@ class Main(Frame):
                     self.mainCharacter.enemy = self.enemyChar
                     self.mainCharacter.wins += 1
                     self.mainCharacter.potion += 1
+                    self.mainCharacter.mana += killMana[randint(0, len(killMana) - 1)]
                     statsList.insert(END, self.mainCharacter)
                     statsList.insert(END, self.enemyChar)
 
                 else:
                     statsList.insert(END, self.mainCharacter)
                     statsList.insert(END, self.enemyChar)
+                    
             #handles running out of mana
             else:
                 statsList.delete("1.0", "end")
                 statsList.insert(END, self.mainCharacter)
                 statsList.insert(END, self.enemyChar)
                 statsList.insert(END, "You don't have enough mana for that ability!")
+                
     def abilityButtons(self):
         #updates the button panel
         global buttonPanel
@@ -231,6 +252,7 @@ class Main(Frame):
         #adds the abilities button to the button panel
         abilitiesButton = Button(buttonPanel, text="Abilities", command=self.useAbilities, pady=25, width=50)
         abilitiesButton.pack()
+        
     def updateStats(self):
         global statsList
         #updates the text box
@@ -238,6 +260,7 @@ class Main(Frame):
         statsList.insert(END, self.mainCharacter)
         statsList.insert(END, self.enemyChar)
         statsList.config(state=NORMAL)
+        
     #updates the text box in regards to potion usage
     def usePotion(self):
         statsList.delete("1.0", "end")
@@ -261,6 +284,7 @@ class Main(Frame):
             statsList.insert(END, self.mainCharacter)
             statsList.insert(END, self.enemyChar)
             statsList.insert(END, "You can't use a potion you don't have!")
+            
     #updates the button panel with unique character move lists
     def useAbilities(self):
         global buttonPanel
@@ -278,11 +302,15 @@ class Main(Frame):
         #takes you back to the main fighter button panel
         backButton = Button(buttonPanel, text="Back", command=self.abilityButtons, pady=25, width=50, state=ACTIVE)
         backButton.pack()
+
+    def lossPanel(self):
+        self.loss = Button(fight, text="Try Again?", command=lambda:(fight.destroy(), self.start()), pady=25, width=50)
+        self.loss.pack(side=TOP)
+
     #starts the game, changing the window
     #the gameplay window
     def start(self):
         global window
-        menu.destroy()
         window = Tk()
         window.title("Fighthon - Now Playing")
         window.configure(background="white", cursor="dot")
@@ -301,16 +329,16 @@ class Main(Frame):
         self.choice.pack()
 
         #choose your fighter buttons: gunsmith, magician, brawler, or demolitionist
-        self.gunsmith = Button(window, text="Gunsmith", command=self.chooseGunsmith, pady=25, width=60)
+        self.gunsmith = Button(window, text="Gunsmith", command=lambda:(window.destroy(), self.chooseGunsmith()), pady=25, width=60)
         self.gunsmith.pack()
 
-        self.magician = Button(window, text="Magician", command=self.chooseMagician, pady=25, width=60)
+        self.magician = Button(window, text="Magician", command=lambda:(window.destroy(),self.chooseMagician()), pady=25, width=60)
         self.magician.pack()
 
-        self.brawler = Button(window, text="Brawler", command=self.chooseBrawler, pady=25, width=60)
+        self.brawler = Button(window, text="Brawler", command=lambda:(window.destroy(),self.chooseBrawler()), pady=25, width=60)
         self.brawler.pack()
 
-        self.demo = Button(window, text="Demolitionist", command=self.chooseDemo, pady=25, width=60)
+        self.demo = Button(window, text="Demolitionist", command=lambda:(window.destroy(),self.chooseDemo()), pady=25, width=60)
         self.demo.pack()
 
         #exits the game
@@ -318,16 +346,14 @@ class Main(Frame):
         self.exit.pack(side=BOTTOM)
 
         window.mainloop()
+        
     #the game window
     def fightWindow(self):
-        global window
         global fight
-        window.destroy()
         fight = Tk()
         fight.title("Fighthon - In Game")
         fight.configure(background="white", cursor="dot")
         fight.geometry("1280x720")
-        #fight.attributes("-fullscreen", True)
         winsound.PlaySound("song.wav", winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC | winsound.SND_ALIAS )
 
         #sets the background image
@@ -370,6 +396,7 @@ class Main(Frame):
         self.abilityButtons()
 
         fight.mainloop()
+        
     #button commands
     #choose gunsmith
     def chooseGunsmith(self):
@@ -387,6 +414,7 @@ class Main(Frame):
         c1.mainChar = True
         self.mainCharacter = c1
         self.fightWindow()
+        
     #choose magician
     def chooseMagician(self):
         c2 = Fighter("Magician", "magician.gif")
@@ -405,6 +433,7 @@ class Main(Frame):
         c2.mainChar = True
         self.mainCharacter = c2
         self.fightWindow()
+        
     #choose brawler
     def chooseBrawler(self):
         c3 = Fighter("Brawler", "brawler.gif")
@@ -423,6 +452,7 @@ class Main(Frame):
         c3.mainChar = True
         self.mainCharacter = c3
         self.fightWindow()
+        
     #choose demolitionist
     def chooseDemo(self):
         c4 = Fighter("Demolitionist", "demo.gif")
@@ -440,6 +470,7 @@ class Main(Frame):
         c4.mainChar = True
         self.mainCharacter = c4
         self.fightWindow()
+        
 #########################################################################
 #the main part of the program
 #create the window
