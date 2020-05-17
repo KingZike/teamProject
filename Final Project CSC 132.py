@@ -168,11 +168,11 @@ class Main(Frame):
             self.enemyChar.health -= 10
             self.mainCharacter.health -= damageAmount[randint(0, len(damageAmount)-1)]
             statsList.delete("1.0", "end")
+            
             #condition for losing
             #stops the background music
-            
             if self.mainCharacter.health <= 0:
-                winsound.PlaySound(None, winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC | winsound.SND_ALIAS )
+                winsound.PlaySound("lose.wav", winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_ALIAS )
                 statsList.insert(END, "You lost!" + "\n\n" + "You have defeated " + str(self.mainCharacter.wins) + " enemies!")
                 buttonPanel.destroy()
                 self.lossPanel()
@@ -206,7 +206,7 @@ class Main(Frame):
                 #stops background music
                 
                 if self.mainCharacter.health <= 0:
-                    winsound.PlaySound(None, winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC | winsound.SND_ALIAS )
+                    winsound.PlaySound("lose.wav", winsound.SND_FILENAME | winsound.SND_ASYNC | winsound.SND_ALIAS )
                     statsList.insert(END, "You lost!" + "\n\n" + "You have defeated " + str(self.mainCharacter.wins) + " enemies!")
                     buttonPanel.destroy()
                     self.lossPanel()
@@ -317,13 +317,9 @@ class Main(Frame):
         window.geometry("1280x720")
 
         #sets the background image
-        background_img = PhotoImage(file="background.gif")
+        background_img = PhotoImage(file="start.gif")
         background_label = Label(window, image=background_img)
         background_label.place(x=0, y=0, relwidth=1, relheight=1)
-
-        #blank space followed by choose your fighter text
-        self.blank = Label(window, text="", pady=50, bg="white")
-        self.blank.pack()
 
         self.choice = Label(window, text="CHOOSE YOUR FIGHTER", font=("Comic Sans", 45, "bold", "italic"), pady=75, bg="white", fg="black")
         self.choice.pack()
