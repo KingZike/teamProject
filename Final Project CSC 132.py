@@ -6,7 +6,10 @@
 import winsound 
 from Tkinter import *
 from random import *
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
 class Fighter(object):
     def __init__(self, name, avatar):
         #each fighter has a name, avatar, health bar, move set, potion, and mana.
@@ -25,6 +28,7 @@ class Fighter(object):
         self.mainChar = False
 
     # decorators
+    #name
     @property
     def name(self):
         return self._name
@@ -32,6 +36,7 @@ class Fighter(object):
     @name.setter
     def name(self, value):
         self._name = value
+<<<<<<< HEAD
 
 ##    @property
 ##    def opponent(self):
@@ -41,6 +46,17 @@ class Fighter(object):
 ##    def opponent(self, value):
 ##        self._opponent = value
 
+=======
+    #opponent
+    @property
+    def opponent(self):
+        return self._opponent
+    
+    @opponent.setter
+    def opponent(self, value):
+        self._opponent = value
+    #mana
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
     @property
     def mana(self):
         return self._mana
@@ -51,7 +67,7 @@ class Fighter(object):
             self._mana = self.maxMana
         else:
             self._mana = value
-
+    #maxHealth
     @property
     def maxHealth(self):
         return self._maxHealth
@@ -59,7 +75,7 @@ class Fighter(object):
     @maxHealth.setter
     def maxHealth(self, value):
         self._maxHealth = value
-
+    #wins
     @property
     def wins(self):
         return self._wins
@@ -67,7 +83,7 @@ class Fighter(object):
     @wins.setter
     def wins(self, value):
         self._wins = value
-
+    #avatar
     @property
     def avatar(self):
         return self._avatar
@@ -75,7 +91,7 @@ class Fighter(object):
     @avatar.setter
     def avatar(self, value):
         self._avatar = value
-
+    #health
     @property
     def health(self):
         return self._health
@@ -86,7 +102,7 @@ class Fighter(object):
             self._health = self.maxHealth
         else:
             self._health = value
-
+    #potion
     @property
     def potion(self):
         return self._potion
@@ -94,7 +110,7 @@ class Fighter(object):
     @potion.setter
     def potion(self, value):
         self._potion = value
-
+    #moves
     @property
     def moves(self):
         return self._moves
@@ -102,6 +118,7 @@ class Fighter(object):
     @moves.setter
     def moves(self, value):
         self._moves = value
+<<<<<<< HEAD
 
 ##    @property
 ##    def inventory(self):
@@ -111,6 +128,17 @@ class Fighter(object):
 ##    def inventory(self, value):
 ##        self._inventory = value
 
+=======
+    #inventory
+    @property
+    def inventory(self):
+        return self._inventory
+
+    @inventory.setter
+    def inventory(self, value):
+        self._inventory = value
+    #sets health
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
     def setHealth(self, health):
         self._health = health
 
@@ -118,12 +146,21 @@ class Fighter(object):
     def addMove(self, move, dmg, cost):
         self._moves[move] = dmg, cost
 
+<<<<<<< HEAD
 ##    # add item to the inventory
 ##    def addDrop(self, items):
 ##        self.items = ["sword", "gun", "healthkit"]
 ##        self.inventory.append(items[randint(0, len(items))])
 
     #the display for health, damage, etc.
+=======
+    # add item to the inventory
+    def addDrop(self, items):
+        self.items = ["sword", "gun", "healthkit"]
+        self.inventory.append(items[randint(0, len(items))])
+
+    #string that appears in the console that displays status of the fight
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
     def __str__(self):
         num = 1
         s = ""
@@ -169,7 +206,12 @@ class Main(Frame):
         self.enemyChar = None
 
         # layout of the main menu
+<<<<<<< HEAD
         self.title = Label(parent, text="Welcome to Fighthon!", font=("Comic Sans", 30, "bold"), pady=40, bg="white", fg="black")
+=======
+        self.title = Label(parent, text="Welcome to Fighthon!", font=("Comic Sans", 30, "bold"), pady=40, bg="red",
+                           fg="black")
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
         self.title.pack()
 
         # starts the game
@@ -190,7 +232,7 @@ class Main(Frame):
 ##        enemy1.addMove("charge", 35, 0)
 ##        enemy1.addMove("quick slash", 20, 0)
         self.enemyChar = enemy1
-
+    #attackMove function
     def attackMove(self, ability = None):
         #a list that creates different damage chances
         damageAmount = [1, 3, 3, 3, 5, 8]
@@ -200,12 +242,18 @@ class Main(Frame):
             self.enemyChar.health -= 10
             self.mainCharacter.health -= damageAmount[randint(0, len(damageAmount)-1)]
             statsList.delete("1.0", "end")
-
+            #condition for losing
+            #displays "you lost" and how many enemies you defeated
             if self.mainCharacter.health <= 0:
                 winsound.PlaySound(None, winsound.SND_FILENAME | winsound.SND_LOOP | winsound.SND_ASYNC | winsound.SND_ALIAS )
                 statsList.insert(END, "You lost!" + "\n\n" + "You have defeated " + str(self.mainCharacter.wins) + " enemies!")
                 buttonPanel.destroy()
+<<<<<<< HEAD
                 
+=======
+            #condition for beating an enemy
+            #a new enemy appears and the player gaines a win and an extra potion
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
             elif self.enemyChar.health <= 0:
                 self.enemy()
                 self.mainCharacter.enemy = self.enemyChar
@@ -217,7 +265,11 @@ class Main(Frame):
             else:
                 statsList.insert(END, self.mainCharacter)
                 statsList.insert(END, self.enemyChar)
+<<<<<<< HEAD
                 
+=======
+        #condition that handles the mana cost for abilities 
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
         else:
             h, c = self.mainCharacter.moves[ability]
             if self.mainCharacter.mana >= c:
@@ -248,7 +300,7 @@ class Main(Frame):
                 statsList.insert(END, self.mainCharacter)
                 statsList.insert(END, self.enemyChar)
                 statsList.insert(END, "You don't have enough mana for that ability!")
-
+    #function for the buttons in the GUI
     def abilityButtons(self):
 
         #updates the button panel
@@ -256,9 +308,14 @@ class Main(Frame):
         buttonPanel.destroy()
         secondButton = Frame(fight)
         buttonPanel = secondButton
+<<<<<<< HEAD
         buttonPanel.pack(side=BOTTOM)
 
         # adds the attack button to the button panel
+=======
+        buttonPanel.pack(side=LEFT)
+        #The left of the GUI shows the attack, potion, and abilites buttons
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
         attackButton = Button(buttonPanel, text="Attack", command=self.attackMove, pady=25, width=50, state=ACTIVE)
         attackButton.pack()
 
@@ -269,7 +326,7 @@ class Main(Frame):
         # adds the abilities button to the button panel
         abilitiesButton = Button(buttonPanel, text="Abilities", command=self.useAbilities, pady=25, width=50)
         abilitiesButton.pack()
-
+    #function that updates the status in the console on the right side of the GUI
     def updateStats(self):
         global statsList
 
@@ -279,7 +336,12 @@ class Main(Frame):
         statsList.insert(END, self.enemyChar)
         statsList.config(state=NORMAL)
 
+<<<<<<< HEAD
     # updates the text box in regards to potion usage
+=======
+
+    #function that handles adding health to the players health after using a potion
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
     def usePotion(self):
         statsList.delete("1.0", "end")
         # checks if the player has any remaining potions and that they aren't at max health
@@ -302,8 +364,12 @@ class Main(Frame):
             statsList.insert(END, self.mainCharacter)
             statsList.insert(END, self.enemyChar)
             statsList.insert(END, "You can't use a potion you don't have!")
+<<<<<<< HEAD
 
     # updates the button panel with unique character move lists
+=======
+    #function that handles the abilites buttons 
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
     def useAbilities(self):
         global buttonPanel
         buttonPanel.destroy()
@@ -328,8 +394,13 @@ class Main(Frame):
         menu.destroy()
         window = Tk()
         window.title("Fighthon - Now Playing")
+<<<<<<< HEAD
         window.configure(background="white", cursor="dot")
         window.geometry("1280x720")
+=======
+        window.configure(background="red", cursor="dot")
+        window.attributes("-fullscreen", True)
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
 
         #sets the background image
         background_img = PhotoImage(file="background.gif")
@@ -337,7 +408,7 @@ class Main(Frame):
         background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
         # blank space followed by choose your fighter text
-        self.blank = Label(window, text="", pady=50, bg="white")
+        self.blank = Label(window, text="", pady=50, bg="red")
         self.blank.pack()
 
         self.choice = Label(window, text="CHOOSE YOUR FIGHTER", font=("Comic Sans", 45, "bold", "italic"), pady=75, bg="white", fg="black")
@@ -361,14 +432,19 @@ class Main(Frame):
         self.exit.pack(side=BOTTOM)
 
         window.mainloop()
+<<<<<<< HEAD
 
     # the game window
+=======
+    #The fighting window 
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
     def fightWindow(self):
         global window
         global fight
         window.destroy()
         fight = Tk()
         fight.title("Fighthon - In Game")
+<<<<<<< HEAD
         fight.configure(background="white", cursor="dot")
         fight.geometry("1280x720")
         #fight.attributes("-fullscreen", True)
@@ -388,12 +464,38 @@ class Main(Frame):
         statPanel.pack(side=TOP, anchor=N)
 
         # inserts the text box into the text frame
+=======
+        fight.configure(background = "red", cursor = "dot")
+        fight.attributes("-fullscreen", True)
+        #mixer.music.init()
+        #mixer.music.load("song.wav")
+        #mixer.play()
+
+        #exit button
+        self.exit = Button(fight, text="Exit", command=exit, pady=2, width=10)
+        self.exit.pack(side=BOTTOM)
+        #displays the image depending on what character you pick
+        img = PhotoImage(file=self.mainCharacter.avatar)
+        imgScreen = Label(fight, image=img)
+        imgScreen.pack(side=BOTTOM)
+        imgScreen.pack_propagate(False)
+        #displays the correct enemy image
+        img1 = PhotoImage(file=self.enemyChar.avatar)
+        imgScreen1 = Label(fight, image=img1)
+        imgScreen1.pack(side=RIGHT)
+        imgScreen1.pack_propagate(False)
+        #status window on the right
+        statPanel = Frame(fight)
+        statPanel.pack(side=RIGHT)
+        #back ground of gui 
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
         global statsList
         statsList = Text(statPanel, bg="white")
         statsList.pack()
         statsList.insert(END, self.mainCharacter)
         statsList.insert(END, self.enemyChar)
         statsList.config(state=NORMAL)
+<<<<<<< HEAD
 
         # initializes the fighter buttons as a frame
         global buttonPanel
@@ -413,15 +515,28 @@ class Main(Frame):
         # updates the fighter buttons
         self.abilityButtons()
 
+=======
+        #buttons on the left
+        global buttonPanel
+        buttonPanel = Frame(fight)
+        buttonPanel.pack(side=LEFT)
+        #calls abilitieyButton function
+        self.abilityButtons()
+        statPanel = Frame(fight)
+        statPanel.pack(side=RIGHT)
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
         fight.mainloop()
-
-    # button commands
-    # choose gunsmith
+    #button commands
+    #choose gunsmith
     def chooseGunsmith(self):
         c1 = Fighter("Gunsmith", "gunsmith.gif")
         Main.character = c1
+<<<<<<< HEAD
 
         # Gunsmith stats
+=======
+        #Gunsmith stats
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
         c1.maxHealth = 65
         c1.setHealth(65)
         c1.addMove("Buckshot", 25, 10)
@@ -433,12 +548,16 @@ class Main(Frame):
         self.mainCharacter = c1
         self.fightWindow()
 
+<<<<<<< HEAD
     # choose magician
+=======
+
+    #choose magician
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
     def chooseMagician(self):
         c2 = Fighter("Magician", "magician.gif")
         Main.character = c2
-
-        # Magician stats
+        #Magician stats
         c2.maxHealth = 75
         c2.setHealth(75)
         c2.addMove("Wind Blast", 30, 15)
@@ -452,12 +571,21 @@ class Main(Frame):
         self.mainCharacter = c2
         self.fightWindow()
 
+<<<<<<< HEAD
     # choose brawler
     def chooseBrawler(self):
         c3 = Fighter("Brawler", "brawler.gif")
         Main.character = c3
         
         # Brawler stats
+=======
+
+    #choose brawler
+    def chooseBrawler(self):
+        c3 = Fighter("Brawler", "brawler.gif")
+        Main.character = c3
+        #Brawler stats
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
         c3.maxHealth = 100
         c3.setHealth(100)
         c3.addMove("Flying Knee", 35, 10)
@@ -472,15 +600,20 @@ class Main(Frame):
         self.fightWindow()
 
 
-    # choose demolitionist
+    #choose demolitionist
     def chooseDemo(self):
         c4 = Fighter("Demolitionist", "demo.gif")
         Main.character = c4
 
-        # Demolitionist stats
+        #Demolitionist stats
         c4.maxHealth = 80
         c4.setHealth(80)
+<<<<<<< HEAD
         c4.addMove("Shell Shock", 60, 5)  
+=======
+        c4.addMove("Shell Shock", 60, 5)
+        c4.potion = 4
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
         c4.maxMana = 10
         c4.mana = 10
 
@@ -489,14 +622,22 @@ class Main(Frame):
         c4.mainChar = True
         self.mainCharacter = c4
         self.fightWindow()
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
 #########################################################################
 # the main part of the program
 # create the window
 menu = Tk()
 menu.title("Fighthon")
+<<<<<<< HEAD
 menu.geometry("1280x720")
 menu.configure(background="white", cursor="dot")
+=======
+menu.geometry("800x500")
+menu.configure(background="red", cursor="dot")
+>>>>>>> 8332bb59f20df00614c6db195411ed9472ed26a6
 
 # create the GUI as a Tkinter canvas inside the window
 g = Main(menu)
