@@ -402,8 +402,10 @@ class Main(Frame):
         #Gunsmith stats
         c1.maxHealth = 65
         c1.setHealth(65)
-        c1.addMove("Buckshot", 25, 10)
+        c1.addMove("Buckshot", 25, 25)
         c1.addMove("Pistol Whip", 50, 10)
+        c1.maxMana = 50
+        c1.mana = 50
         
         self.enemy()
         c1.opponent = self.enemyChar.name
