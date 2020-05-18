@@ -403,7 +403,7 @@ class Main(Frame):
         c1.maxHealth = 65
         c1.setHealth(65)
         c1.addMove("Buckshot", 25, 10)
-        c1.addMove("Pistol Whip", 50, 25)
+        c1.addMove("Pistol Whip", 50, 10)
         
         self.enemy()
         c1.opponent = self.enemyChar.name
