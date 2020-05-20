@@ -403,7 +403,7 @@ class Main(Frame):
         c1.maxHealth = 65
         c1.setHealth(65)
         c1.addMove("Buckshot", 25, 25)
-        c1.addMove("Pistol Whip", 50, 10)
+        c1.addMove("Pistol Whip", 50, 25)
         c1.maxMana = 50
         c1.mana = 50
         
@@ -422,7 +422,7 @@ class Main(Frame):
         c2.maxHealth = 75
         c2.setHealth(75)
         c2.addMove("Wind Blast", 30, 15)
-        c2.addMove("Lightning Bolt", 40, 25)
+        c2.addMove("Lightning Bolt", 40, 15)
         c2.maxMana = 75
         c2.mana = 75
 
@@ -441,7 +441,7 @@ class Main(Frame):
         c3.maxHealth = 100
         c3.setHealth(100)
         c3.addMove("Flying Knee", 35, 10)
-        c3.addMove("Swift Jab", 20, 5)
+        c3.addMove("Swift Jab", 20, 10)
         c3.maxMana = 30
         c3.mana = 30
 
